@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Calculator } from "@/components/calculator";
 import { FaqSection, type FaqItem } from "@/components/faq-section";
 import { SponsorSlot } from "@/components/sponsor-slot";
+import { API_PAUSED_NOTE, isGithubPages, pagesSiteUrl } from "@/lib/hosting";
 import { PUBLIC_URL } from "@/lib/share";
 
 const moves = [
@@ -37,7 +38,7 @@ const appJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Hotel OTA Commission Calculator",
-  url: `${PUBLIC_URL}/`,
+  url: isGithubPages ? `${pagesSiteUrl(PUBLIC_URL)}/` : `${PUBLIC_URL}/`,
   applicationCategory: "BusinessApplication",
   operatingSystem: "Any (web browser)",
   isAccessibleForFree: true,
@@ -76,7 +77,9 @@ const faq: FaqItem[] = [
   },
   {
     q: "Is there an API for AI agents?",
-    a: "Yes. GET https://hotel-ota-calculator.vercel.app/api/calculate?rooms=20&adr=150&occupancy=70&otaShare=60&commission=18 returns the same numbers as JSON with no key. It is also a tool on the free Free Agent Tools MCP server at https://free-agent-tools.vercel.app/mcp.",
+    a: isGithubPages
+      ? API_PAUSED_NOTE
+      : "Yes. GET https://hotel-ota-calculator.vercel.app/api/calculate?rooms=20&adr=150&occupancy=70&otaShare=60&commission=18 returns the same numbers as JSON with no key. It is also a tool on the free Free Agent Tools MCP server at https://free-agent-tools.vercel.app/mcp.",
   },
 ];
 
